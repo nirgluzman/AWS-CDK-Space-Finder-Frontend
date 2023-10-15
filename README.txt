@@ -15,3 +15,8 @@ Steps:
 
 Build React app with Vite, https://vitejs.dev/guide/
 npm create vite@latest -- --template react-ts
+
+
+Amplify for user authentication:
+npm install aws-amplify
+npm install @aws-amplify/auth

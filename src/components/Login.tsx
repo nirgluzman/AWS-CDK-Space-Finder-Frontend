@@ -11,7 +11,7 @@ export default function Login({ authService, setUserNameCb }: LoginProps) {
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [loginSucess, setloginSucess] = useState<boolean>(false);
+  const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
 
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
@@ -20,9 +20,10 @@ export default function Login({ authService, setUserNameCb }: LoginProps) {
 
       if (loginRespose) {
         setUserNameCb(userName);
-        setloginSucess(true);
+        setLoginSuccess(true);
       } else {
         setErrorMessage('invalid credentials');
+        setLoginSuccess(false);
       }
     } else {
       setErrorMessage('please fill all fields');
@@ -37,10 +38,10 @@ export default function Login({ authService, setUserNameCb }: LoginProps) {
 
   return (
     <div>
-      {loginSucess && (
+      {loginSuccess && (
         <Navigate
           to='/profile'
-          replace={true}
+          replace={true} // the current entry in the history stack will be replaced with the new one.
         />
       )}
       <h2>Please login</h2>
@@ -59,8 +60,7 @@ export default function Login({ authService, setUserNameCb }: LoginProps) {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        {/* defines a button for submitting the form */}
-        <input
+        <input // defines a button for submitting the form.
           type='submit'
           value='Login'
         />
