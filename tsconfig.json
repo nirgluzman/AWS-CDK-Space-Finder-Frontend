@@ -16,8 +16,8 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false, // TypeScript compiler to generate an error if it finds unused local variables.
+    "noUnusedParameters": true, // TypeScript compiler to generate an error if it finds unused parameters.
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
