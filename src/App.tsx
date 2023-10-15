@@ -2,6 +2,11 @@ import { Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 
 import NavBar from './components/NavBar';
+import Login from './components/Login';
+
+import { AuthService } from './services/AuthService';
+
+const authService = new AuthService();
 
 function App() {
   const [userName, setUserName] = useState<string | undefined>(undefined);
@@ -16,7 +21,12 @@ function App() {
         />
         <Route
           path='/login'
-          element={<div>Login page</div>}
+          element={
+            <Login
+              authService={authService}
+              setUserNameCb={setUserName}
+            />
+          }
         />
         <Route
           path='/profile'
