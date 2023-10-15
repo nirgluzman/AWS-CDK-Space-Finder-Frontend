@@ -60,7 +60,7 @@ export default function Login({ authService, setUserNameCb }: LoginProps) {
           onChange={(e) => setPassword(e.target.value)}
         />
         <br />
-        <input // defines a button for submitting the form.
+        <input // button for submitting the form.
           type='submit'
           value='Login'
         />
