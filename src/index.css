@@ -9,12 +9,14 @@
     /* CSS Color Palette */
   --bg-color: #222831;
   --font-color: #f2f2f2;
+  --message-color: red;
+
   --navbar-color: #393e46;
   --navbar-hoover-background-color: #fcedda;
   --navbar-hoover-font-color: black;
   --navbar-select-background-color: #b6d7de;
   --navbar-select-font-color: black;
-
+  
   font-family: Inter, system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.5; /* 1.5 times the space between each line of text */
   font-weight: 400;
@@ -30,6 +32,10 @@
   -webkit-font-smoothing: antialiased; /* enable font smoothing on all browsers */
   -moz-osx-font-smoothing: grayscale; /* enable font smoothing on all browsers */
   -webkit-text-size-adjust: 100%;
+}
+
+.message {
+  color: var(--message-color)
 }
 
 .wrapper {

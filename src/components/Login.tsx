@@ -26,13 +26,13 @@ export default function Login({ authService, setUserNameCb }: LoginProps) {
         setLoginSuccess(false);
       }
     } else {
-      setErrorMessage('please fill all fields');
+      setErrorMessage('Please fill all fields!');
     }
   };
 
   function renderLoginResult() {
     if (errorMessage) {
-      return <label>{errorMessage}</label>;
+      return <label className='message'>{errorMessage}</label>;
     }
   }
 

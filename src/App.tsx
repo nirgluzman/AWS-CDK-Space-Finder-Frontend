@@ -3,10 +3,13 @@ import { useState } from 'react';
 
 import NavBar from './components/NavBar';
 import Login from './components/Login';
+import CreateSpace from './components/spaces/CreateSpace';
 
 import { AuthService } from './services/AuthService';
+import { DataService } from './services/DataService';
 
 const authService = new AuthService();
+const dataService = new DataService();
 
 function App() {
   const [userName, setUserName] = useState<string | undefined>(undefined);
@@ -34,7 +37,7 @@ function App() {
         />
         <Route
           path='/createSpace'
-          element={<div>Create space page</div>}
+          element={<CreateSpace dataService={dataService} />}
         />
         <Route
           path='/spaces'
