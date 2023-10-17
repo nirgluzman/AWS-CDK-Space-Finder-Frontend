@@ -1,6 +1,8 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { AuthService } from './AuthService';
-import { AuthStack, DataStack } from '../../../space-finder/outputs.json';
+import { AuthStack, DataStack, ApiStack } from '../../../space-finder/outputs.json';
+
+const spaceFinderUrl = ApiStack.ApiEndpoint + 'spaces';
 
 export class DataService {
   private authService: AuthService;
@@ -20,7 +22,7 @@ export class DataService {
     if (!this.s3Client) {
       // initiate client with configuration.
       this.s3Client = new S3Client({
-        region: AuthStack.CognitoRegion,
+        region: AuthStack.awsRegion,
         credentials: {
           accessKeyId: credentials.AccessKeyId,
           secretAccessKey: credentials.SecretKey,
@@ -35,7 +37,7 @@ export class DataService {
 
     // upload an object to a bucket.
     // https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-s3/classes/putobjectcommand.html
-    const putCommand = new PutObjectCommand({
+    const putObjectCommand = new PutObjectCommand({
       Bucket: DataStack.SpaceFinderPhotosBucketName,
       ContentType: file.type,
       Key: encodedFileName,
@@ -43,22 +45,37 @@ export class DataService {
       Body: file,
     });
 
-    const response = await this.s3Client.send(putCommand);
+    const response = await this.s3Client.send(putObjectCommand);
 
     // public url of the file uploaded to S3
     // https://stackoverflow.com/questions/73530333/how-to-get-public-url-of-file-uploaded-to-s3-using-aws-sdk-version-3
-    const filePublicUrl = `https://${DataStack.SpaceFinderPhotosBucketName}.s3.${AuthStack.CognitoRegion}.amazonaws.com/${encodedFileName}`;
+    const filePublicUrl = `https://${DataStack.SpaceFinderPhotosBucketName}.s3.${AuthStack.awsRegion}.amazonaws.com/${encodedFileName}`;
 
     return filePublicUrl;
   }
 
   public async createSpace(name: string, location: string, photo?: File) {
+    const space = {} as any;
+    space.name = name;
+    space.location = location;
+
     if (photo) {
       const photoPublicUrl = await this.uploadFile(photo);
-      console.log(photoPublicUrl);
+      space.photoUrl = photoPublicUrl;
     }
 
-    return 123;
+    const postResult = await fetch(spaceFinderUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: this.authService.jwtIdToken!,
+      },
+      body: JSON.stringify(space),
+    });
+
+    const postResultJSON = await postResult.json();
+
+    return postResultJSON.message;
   }
 
   public isAuthorized() {

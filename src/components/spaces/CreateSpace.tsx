@@ -19,8 +19,8 @@ export default function CreateSpace({ dataService }: CreateSpaceProps) {
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
     if (name && location) {
-      const id = await dataService.createSpace(name, location, photo);
-      setActionResult(`Space ${name} created with id ${id}`);
+      const response = await dataService.createSpace(name, location, photo);
+      setActionResult(response);
       setName('');
       setLocation('');
     } else {
