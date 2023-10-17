@@ -20,3 +20,8 @@ npm create vite@latest -- --template react-ts
 Amplify for user authentication:
 npm install aws-amplify
 npm install @aws-amplify/auth
+
+
+AWS SDK library for interaction with Amazon Cognito Federated Identities:
+npm i @aws-sdk/client-cognito-identity
+

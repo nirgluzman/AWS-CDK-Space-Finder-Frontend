@@ -1,5 +1,15 @@
+import { AuthService } from './AuthService';
+
 export class DataService {
-  public createSpace(name: string, location: string, photo?: File) {
+  private authService: AuthService;
+
+  constructor(authService: AuthService) {
+    this.authService = authService;
+  }
+
+  public async createSpace(name: string, location: string, photo?: File) {
+    const credentials = await this.authService.getTemporaryCredentials();
+    console.log(credentials);
     return 123;
   }
 

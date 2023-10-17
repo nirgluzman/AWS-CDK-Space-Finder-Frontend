@@ -22,7 +22,7 @@ export default function Login({ authService, setUserNameCb }: LoginProps) {
         setUserNameCb(userName);
         setLoginSuccess(true);
       } else {
-        setErrorMessage('invalid credentials');
+        setErrorMessage('Invalid credentials');
         setLoginSuccess(false);
       }
     } else {
