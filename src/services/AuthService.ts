@@ -4,6 +4,7 @@ import {
   CognitoIdentityClient,
   GetCredentialsForIdentityCommand,
   GetIdCommand,
+  Credentials,
 } from '@aws-sdk/client-cognito-identity';
 
 import { AuthStack } from '../../../space-finder/outputs.json';
@@ -25,7 +26,7 @@ export class AuthService {
   private user: CognitoUser | undefined;
 
   private jwtIdToken: string | undefined;
-  private temporaryCredentials: Object | undefined;
+  private temporaryCredentials: Credentials | undefined;
 
   // https://docs.amplify.aws/lib/auth/emailpassword/q/platform/js/#auto-sign-in-after-sign-up
   public async login(userName: string, password: string): Promise<Object | undefined> {
@@ -33,7 +34,8 @@ export class AuthService {
       this.user = (await Auth.signIn(userName, password)) as CognitoUser;
 
       // extract the JWT ID token from the Cognito User object.
-      this.jwtIdToken = this.user?.getSignInUserSession()?.getIdToken().getJwtToken();
+      const idToken = this.user?.getSignInUserSession()?.getIdToken();
+      this.jwtIdToken = idToken?.getJwtToken();
 
       return this.user;
     } catch (error) {
@@ -85,18 +87,18 @@ export class AuthService {
     return credentials;
   }
 
-  public async getTemporaryCredentials() {
+  public async getTemporaryCredentials(): Promise<Credentials | undefined> {
     // if temporary credentials has already been generated, return them.
     if (this.temporaryCredentials) {
       return this.temporaryCredentials;
     }
 
-    // if the user is not signed in, return undefined.
+    // if the user has not signed-in, return undefined.
     if (!this.jwtIdToken) {
       return undefined;
     }
 
-    // generate temporary credentials for the user.
+    // generate temporary credentials for the signed-in user.
     this.temporaryCredentials = await this.generateTemporaryCredentials();
     return this.temporaryCredentials;
   }

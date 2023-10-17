@@ -17,11 +17,14 @@ Build React app with Vite, https://vitejs.dev/guide/
 npm create vite@latest -- --template react-ts
 
 
-Amplify for user authentication:
-npm install aws-amplify
-npm install @aws-amplify/auth
+Amplify library for user authentication:
+aws-amplify
+@aws-amplify/auth
 
 
 AWS SDK library for interaction with Amazon Cognito Federated Identities:
-npm i @aws-sdk/client-cognito-identity
+@aws-sdk/client-cognito-identity
 
+
+AWS SDK library for S3 operations:
+@aws-sdk/client-s3
