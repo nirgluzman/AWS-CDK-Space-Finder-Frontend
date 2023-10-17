@@ -4,6 +4,7 @@ import { useState } from 'react';
 import NavBar from './components/NavBar';
 import Login from './components/Login';
 import CreateSpace from './components/spaces/CreateSpace';
+import Spaces from './components/spaces/Spaces';
 
 import { AuthService } from './services/AuthService';
 import { DataService } from './services/DataService';
@@ -41,7 +42,7 @@ function App() {
         />
         <Route
           path='/spaces'
-          element={<div>Spaces page</div>}
+          element={<Spaces dataService={dataService} />}
         />
       </Routes>
     </div>

@@ -1,0 +1,19 @@
+.space {
+    display: inline-block;
+    width: 350px;
+    margin: 5px;
+    overflow: auto;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.name {
+    color: lightcyan;
+}
+
+.location {
+    color: red
+}

@@ -28,6 +28,14 @@ export class AuthService {
   public jwtIdToken: string | undefined;
   private temporaryCredentials: Credentials | undefined;
 
+  // user login status check
+  public isLogin() {
+    if (this.user) {
+      return true;
+    }
+    return false;
+  }
+
   // https://docs.amplify.aws/lib/auth/emailpassword/q/platform/js/#auto-sign-in-after-sign-up
   public async login(userName: string, password: string): Promise<Object | undefined> {
     try {

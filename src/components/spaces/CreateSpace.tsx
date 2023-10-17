@@ -51,7 +51,7 @@ export default function CreateSpace({ dataService }: CreateSpaceProps) {
   }
 
   function renderForm() {
-    if (!dataService.isAuthorized()) {
+    if (!dataService.isLogin()) {
       return <NavLink to='/login'>Please login first!</NavLink>;
     }
     return (
